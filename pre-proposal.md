@@ -2,7 +2,7 @@
 
 ## Motivation
 
-Our goal is to implement a self-playing AI model for snake game.
+With the development of Autonomous vehicles, games and other advanced fields, the pathfinding algorithm is getting more and more important. So we want to research the performance of different pathfinding algorithms with the platform as a classic game Snake.
 
 ## Algorithms
 
