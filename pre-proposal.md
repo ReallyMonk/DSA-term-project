@@ -23,3 +23,22 @@ Finally, we would run those models on a snake game, test their performances, and
 
 ## Experiment
 
+Several stages will be implemented:
+- Construct the map.
+- Generate the food.
+- Design some algorithms for moving the snake.
+- check the snake if it's dead.
+- compare the advantages between algorithms.
+
+We will compare complexity of several algorithms:
+
+- BFS
+- DFS
+- A*
+- some other greedy algorithms or search algorithms.
+- ...
+
+if possible, we can extend this to the Graph Model.
+
+
+
