@@ -1,0 +1,47 @@
+{
+    "cSpell.words": [
+        "Klabels"
+    ],
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>","<space>","f","m"]
+    },
+    {
+      "before": ["<leader>","j", "j"],
+      "after": ["<Esc>","<space>","f","m"]
+    },
+    {
+      "before":["<leader>",";"],
+      "after":[":"]
+    },
+    {
+      "before":["<leader>","m","q"],
+      "after":["<space>","=","=","<space>"]
+    },
+    {
+      "before":["<leader>","m","r"],
+      "after":["<space>","=","<space>"]
+    },
+    {
+      "before":["<leader>","m","n"],
+      "after":["<space>","!","=","<space>"]
+    },
+    {
+      "before":["<leader>","m","p"],
+      "after":["<space>","+","<space>",]
+    },
+    {
+      "before":["<leader>","m","m"],
+      "after":["<space>","-","<space>",]
+    },
+    {
+      "before":["<leader>","m","t"],
+      "after":["<space>","*","<space>"]
+    },
+    {
+      "before":["<leader>","m","d"],
+      "after":["<space>","/","<space>",]
+    },
+  ],
+}
