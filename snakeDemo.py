@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-09 19:42:20
+@LastEditTime: 2020-04-09 19:43:21
 '''
 from random import sample
 import math
