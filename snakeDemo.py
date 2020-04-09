@@ -3,10 +3,8 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-09 19:39:22
+@LastEditTime: 2020-04-09 19:42:20
 '''
-import numpy as np
-from DoubleLinkList import *
 from random import sample
 import math
 block_num = 8
