@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 20:37:07
-@LastEditTime: 2020-04-10 14:27:42
+@LastEditTime: 2020-04-10 14:31:08
 '''
 from queue import PriorityQueue
 import math
@@ -77,6 +77,5 @@ class Astar:
                 ghosthead = ghostTrace[ghosthead][0]
         path.reverse()
         print(path)
-        print('here')
         return path
 
