@@ -3,14 +3,13 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-13 12:29:09
+@LastEditTime: 2020-04-13 12:28:25
 '''
 from random import sample
 import math
 import numpy as np
 import os
 import time
-from Astar import *
 # block_num = 8
 
 
@@ -36,7 +35,6 @@ class Snake():
         self.oldtail = initBody[-1]+1
         self.astar = Astar(block_num)
         self.path = []
-        self.pathIndex = 0
         print(self)
         self.generateFood()
         self.TEMP = (initBody, self.food, self.path)
@@ -56,71 +54,35 @@ class Snake():
             self.body[self.tail], self.tail = 0, self.body[self.tail]
             return self.head, self.oldtail
         else:
-            # print('score++')
+            print('score++')
             self.len += 1
-            # input('eat')
             self.generateFood()
             print('food', self.food)
-            # flag = True
             return self.head, None, self.food
-        # print(self.len)
-        # print(self)
         return True
-        # if flag:
-        #     return self.path
 
     def up(self):
-        # self.changDir('up')
-        # self.
+        self.dir = -self.bn2
         self.move()
 
     def down(self):
-        self.changDir('down')
+        self.dir = self.bn2
         self.move()
 
     def left(self):
-        self.changDir('left')
+        self.dir = -1
         self.move()
 
     def right(self):
-        self.changDir('right')
+        self.dir = +1
         self.move()
 
     def changDir(self):
-        # flag = False
-        # if self.pathIndex == -1:
-        #     # print('empty')
-        #     if self.len > (self.bn2-2)**2//3:
-        #         self.path = self.astar.find(
-        #             self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
-        #         self.pathIndex = len(self.path)-1
-        #     else:
-        #         self.path = self.astar.find(
-        #             self.food, self.head, self.tail, self.body, self.oldtail)
-        #         self.pathIndex = len(self.path)-1
-        #     flag = True
-        # # else:
-        # self.dir = self.path[self.pathIndex] - self.head
-        # self.pathIndex -= 1
-        # return flag
         if len(self.path):
             self.dir = self.path.pop() - self.head
         else:
-            # input('empty')
-            # print('empty')
-            if self.len > (self.bn2-2)**2//3:
-                self.path = self.astar.find(
-                    self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
-            else:
-                self.path = self.astar.find(
-                    self.food, self.head, self.tail, self.body, self.oldtail)
-            # print('suggest')
-            if not self.path:
-                print(self.food)
-                print(self.head, self.tail, self.oldtail)
-                print(self)
-                return False
-            self.dir = self.path.pop()-self.head
+            print('out of path')
+            return False
         return True
 
     def __str__(self):
@@ -128,7 +90,6 @@ class Snake():
         res = ''
         for i in range(num):
             temp = self.body[i * num: (i + 1) * num]
-            # res += str([i and 1 for i in temp])[1:-1]+"\n"
             res += str(temp)[1:-1]+"\n"
         return res
 
@@ -139,20 +100,8 @@ class Snake():
             print('win')
             return
         self.food = sample(empty, 1)[0]
-        # self.food = 72
-        # self.food = 51
-        # self.body[self.food] = 1
-        # print('food at:{}'.format(self.food))
-        if self.len > (self.bn2-2)**2//3:
-            self.path = self.astar.find(
-                self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
-            # self.pathIndex = len(self.path)-1
-        else:
-            self.path = self.astar.find(
-                self.food, self.head, self.tail, self.body, self.oldtail)
-            # self.pathIndex = len(self.path)-1
-        # print('astar: ', str(self.astar.find(
-        #     self.food, self.head, self.tail, self.body))[1:-1])
+        print('food at:{}'.format(self.food))
+        self.path = pathFindingAlgorithm()
 
 
 if __name__ == '__main__':
