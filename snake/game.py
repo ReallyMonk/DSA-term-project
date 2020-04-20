@@ -72,8 +72,9 @@ class Game:
 
     def run(self):
 
-        window = GameWindow("Self-playing Snake Game", self._conf, self._map, self)
-        window.show(self._game_main_normal)
+        # window = GameWindow("Self-playing Snake Game", self._conf, self._map, self)
+        # window.show(self._game_main_normal)
+        self._game_main_normal()
 
     def _game_main_normal(self):
         if not self._map.has_food():
