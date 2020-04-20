@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-19 21:00:34
+@LastEditTime: 2020-04-19 21:57:37
 '''
 from random import sample
 import math
@@ -48,7 +48,7 @@ class Snake():
         return
 
     def move(self):
-        #self.pass_info()
+        # self.pass_info()
         if not self.changDir():
             return False
         oldhead = self.head
@@ -63,7 +63,7 @@ class Snake():
             self.body[self.tail], self.tail = 0, self.body[self.tail]
             return self.head, self.oldtail
         else:
-            #print('score++')
+            # print('score++')
             self.len += 1
             self.generateFood()
             #print('food', self.food)
@@ -114,39 +114,46 @@ class Snake():
         self.food = sample(empty, 1)[0]
         #print('food at:{}'.format(self.food))
 
-        #self.move()
+        # self.move()
         #print('path', self.path)
-        #print(self)
-        #input()
+        # print(self)
+        # input()
 
 
 if __name__ == '__main__':
     all_time = []
     score = []
+    all_count = []
 
-    for i in range(8, 17):
+    for i in range(8, 17, 2):
         tmp_time = []
         tmp_score = []
+        counts = []
         print('current map size is ', i)
-        for k in range(50):
+        for k in range(10):
             # create snake game
             print(i, k)
             snake = Snake(i)
             # play
             t0 = time.time()
+            count = 0
             while snake.move():
+                count += 1
                 pass
 
             t1 = time.time()
 
             tmp_time.append(t1 - t0)
             tmp_score.append(snake.len)
+            counts.append(count)
 
         all_time.append(np.mean(tmp_time))
         score.append(np.mean(tmp_score))
+        all_count.append(np.mean(counts))
 
     print(all_time)
     print(score)
+    print(all_count)
 
 '''
 if __name__ == "__main__":

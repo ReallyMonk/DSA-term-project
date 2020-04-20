@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 20:37:07
-@LastEditTime: 2020-04-19 21:30:02
+@LastEditTime: 2020-04-19 21:49:32
 '''
 from queue import PriorityQueue
 import numpy as np
@@ -140,19 +140,3 @@ class Astar:
             self.step_weight = -self.step_weight
         # print(maxqsize, path)
         return path
-
-    for i in range(8, 17, 2):
-        scores = []
-        runtimes = []
-        for k in range(1):
-
-            conf = GameConf(map_rows=i)
-            conf.solver_name = dict_solver[args.s]
-            print("Algorithm: %s  " % (conf.solver_name))
-
-            G = Game(conf)
-            G.run()
-            runtimes.append(G.total_time)
-            # print('total_time: ', G.total_time)
-            # print('total move: ', G.count)
-        print(i, i**2-3, np.mean(runtimes))
