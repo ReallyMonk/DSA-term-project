@@ -22,8 +22,12 @@ parser.add_argument("-s", default="hamilton", choices=dict_solver.keys(),
                     help="name of the solver to direct the snake (default: hamilton)")
 args = parser.parse_args()
 
-conf = GameConf()
-conf.solver_name = dict_solver[args.s]
-print("Algorithm: %s  " % (conf.solver_name))
+if __name__ == '__main__':
+    conf = GameConf(map_rows = 8)
+    conf.solver_name = dict_solver[args.s]
+    print("Algorithm: %s  " % (conf.solver_name))
 
-Game(conf).run()
+    G = Game(conf)
+    G.run()
+    print('total_time: ', G.total_time)
+    print('total move: ', G.count)

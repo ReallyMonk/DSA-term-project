@@ -14,14 +14,14 @@ import time
 
 class GameConf:
 
-    def __init__(self, algorithm_name = 'HamiltonSolver'):
+    def __init__(self, map_rows = 16, algorithm_name = 'HamiltonSolver'):
         """Initialize a default configuration."""
 
         # Solver
         self._algorithm_name = algorithm_name  # Class name of the solver
 
         # Size
-        self.map_rows = 16
+        self.map_rows = map_rows
         self.map_cols = self.map_rows
         self.map_width = 320  # pixels
         self.map_height = self.map_width
@@ -74,7 +74,7 @@ class Game:
 
         # window = GameWindow("Self-playing Snake Game", self._conf, self._map, self)
         # window.show(self._game_main_normal)
-        while 1:
+        while not self._is_episode_end():
             self._game_main_normal()
 
     def _game_main_normal(self):
