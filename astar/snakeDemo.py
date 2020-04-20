@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-19 15:33:29
+@LastEditTime: 2020-04-19 21:13:11
 '''
 from random import sample
 import math
@@ -149,8 +149,8 @@ if __name__ == '__main__':
         scores = []
         runtimes = []
         # print(i)
-        for k in range(10):
-
+        for k in range(50):
+            # print(i, k)
             snake = Snake(i)
             start = perf_counter()
             while snake.move():

@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-13 12:28:25
+@LastEditTime: 2020-04-19 21:00:34
 '''
 from random import sample
 import math
@@ -35,7 +35,7 @@ class Snake():
         self.tail = initBody[-1]
         self.oldtail = initBody[-1] + 1
         self.path = []
-        print(self)
+        # print(self)
 
         # create a slover
         self.solver = bfs.bfsSolver()
@@ -93,7 +93,7 @@ class Snake():
         if len(self.path):
             self.dir = self.path.pop() - self.head
         else:
-            print('out of path')
+            # print('out of path')
             return False
         return True
 
@@ -127,9 +127,10 @@ if __name__ == '__main__':
     for i in range(8, 17):
         tmp_time = []
         tmp_score = []
-        for k in range(10):
-            print('current map size is ', i)
+        print('current map size is ', i)
+        for k in range(50):
             # create snake game
+            print(i, k)
             snake = Snake(i)
             # play
             t0 = time.time()
