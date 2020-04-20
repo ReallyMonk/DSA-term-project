@@ -5,6 +5,7 @@
 from snake.base import Direc
 from snake.solver.base import BaseSolver
 from snake.solver.path import PathSolver
+import time
 
 
 class _TableCell:
@@ -25,7 +26,10 @@ class HamiltonSolver(BaseSolver):
         self._path_solver = PathSolver(snake)
         self._table = [[_TableCell() for _ in range(snake.map.num_cols)]
                         for _ in range(snake.map.num_rows)]
+        import time
+        start = time.time()
         self._build_cycle()
+        print('build hamilton cycle need: ', time.time() - start, 's')
 
     @property
     def table(self):
@@ -51,9 +55,10 @@ class HamiltonSolver(BaseSolver):
                     food_idx_rel = self._relative_dist(tail_idx, food_idx, self.map.capacity)
                     if nxt_idx_rel > head_idx_rel and nxt_idx_rel <= food_idx_rel:
                         nxt_direc = path[0]
-        print('nxt_direc:', nxt_direc)
+        #print('nxt_direc:', nxt_direc)
         return nxt_direc
-
+    # not short cut : 100: 0.0024
+    # short cut : 100: 0.74
     def _build_cycle(self):
         """Build a hamiltonian cycle on the map."""
         path = self._path_solver.longest_path_to_tail()

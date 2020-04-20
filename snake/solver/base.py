@@ -30,3 +30,4 @@ class BaseSolver:
     def close(self):
         """Release resources."""
         pass
+

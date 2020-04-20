@@ -10,6 +10,7 @@ from enum import Enum, unique
 from snake.base import Direc, Map, PointType, Pos, Snake
 from snake.gui import GameWindow
 from snake.solver import GreedySolver, HamiltonSolver
+import time
 
 class GameConf:
 
@@ -62,6 +63,8 @@ class Game:
         print(globals())
         self._algorithm = globals()[self._conf.algorithm_name](self._snake)
         print(self._algorithm)
+        self.count = 0
+        self.total_time = 0.0
 
     @property
     def snake(self):
@@ -79,7 +82,15 @@ class Game:
         if self._is_episode_end():
             return
 
-        self._update_direc(self._algorithm.next_direc())
+        start = time.time()
+        next = self._algorithm.next_direc()
+        end = time.time()
+        self.count += 1
+        self.total_time += (end - start)
+        print('total_time', self.total_time)
+        print('move times: ', self.count)
+
+        self._update_direc(next)
 
         self._snake.move()
 
