@@ -81,7 +81,7 @@ class Game:
     def _game_main_normal(self):
         if not self._map.has_food():
             self._map.create_rand_food()
-            self.creatfood += 1
+            self.creat_food += 1
 
         if self._is_episode_end():
             return
@@ -91,8 +91,8 @@ class Game:
         end = time.time()
         self.count += 1
         self.total_time += (end - start)
-        print('total_time', self.total_time)
-        print('move times: ', self.count)
+        # print('total_time', self.total_time)
+        # print('move times: ', self.count)
 
         self._update_direc(next)
 
