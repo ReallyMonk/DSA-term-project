@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-10 20:14:28
-@LastEditTime: 2020-04-12 20:56:25
+@LastEditTime: 2020-04-19 13:55:16
 '''
 from tkinter import *
 # from import Thread, Lock
@@ -99,4 +99,4 @@ class CanvasDemo:
             x*self.bs, y*self.bs, (x+1)*self.bs, (y+1)*self.bs, fill=color)
 
 
-CanvasDemo(16)
+CanvasDemo(8)

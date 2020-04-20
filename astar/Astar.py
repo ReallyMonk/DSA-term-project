@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 20:37:07
-@LastEditTime: 2020-04-13 12:04:12
+@LastEditTime: 2020-04-19 14:41:33
 '''
 from queue import PriorityQueue
 import numpy as np
@@ -12,15 +12,19 @@ import math
 
 class Astar:
     class ghostSnake:       # at every branch, send a ghost snake to all its neighbor blocks
-        def __init__(self, head, cost, prehead, tail, body, LongestPath):
+        def __init__(self, head, cost, prehead, tail, body, LongestPath, pretail=None):
             self.head = head
             self.cost = cost
             self.body = body.copy()
             self.body[prehead] = head
             self.body[head] = head
-            self.pretail = tail
-            self.tail = body[tail]
-            self.body[tail] = LongestPath
+            if not pretail:
+                self.pretail = tail
+                self.tail = body[tail]
+                self.body[tail] = LongestPath
+            else:
+                self.pretail = pretail
+                self.tail = tail
 
         def __lt__(self, other):    # less than, used in prioritu queue
             return self.cost < other.cost
@@ -94,7 +98,7 @@ class Astar:
                     break
                 stt = self.find(ghost.pretail, ghosthead, ghosttail, ghostbody, 0,1)
                 if stt:
-                    print('found')
+                    # print('found')
                     # print('to tail', stt)
                     # if len(stt) == 1:
                     #     print('len is 1')
@@ -102,11 +106,12 @@ class Astar:
                     # print('food:', end='')
                     break
                 else:
-                    print('not found')
                     # bd = body.copy()
                     # bd[tail] = 0
                     # tl = body[tail]
+                    # print(body[oldtail])
                     path = self.find(oldtail, head, tail, body, 1, 1)
+                    # print('not found', len(path))
                     # print('not found! GO tail', path)
                     # input()
                     # print(path)
@@ -119,8 +124,12 @@ class Astar:
                     continue
                 ghostTrace[neighbors[i]] = (ghosthead, costs[i])
                 # print('enqueue: ', neighbors[i], "->", ghosthead, costs[i])
-                pq.put(self.ghostSnake(
-                    neighbors[i], costs[i], ghosthead, ghosttail, ghostbody, LongestPath))
+                if neighbors[i] == food:
+                    pq.put(self.ghostSnake(
+                        neighbors[i], costs[i], ghosthead, ghosttail, ghostbody, LongestPath, ghost.pretail))
+                else:
+                    pq.put(self.ghostSnake(
+                        neighbors[i], costs[i], ghosthead, ghosttail, ghostbody, LongestPath))
         if found:
 
             while ghosthead != head:

@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-13 12:29:09
+@LastEditTime: 2020-04-19 15:33:29
 '''
 from random import sample
 import math
@@ -11,6 +11,7 @@ import numpy as np
 import os
 import time
 from Astar import *
+from time import perf_counter
 # block_num = 8
 
 
@@ -20,7 +21,7 @@ class Snake():
         self.bn2 = block_num + 2
         self.body = [0]*self.bn2**2
         # initBody = [31, 41, 42, 43]
-        self.len = 0
+        self.len = 1
         if not initBody:
             halfN = len(self.body) // 2
             initBody = [halfN+i for i in range(-4, -1)]
@@ -37,7 +38,6 @@ class Snake():
         self.astar = Astar(block_num)
         self.path = []
         self.pathIndex = 0
-        print(self)
         self.generateFood()
         self.TEMP = (initBody, self.food, self.path)
 
@@ -47,9 +47,7 @@ class Snake():
         oldhead = self.head
         self.head += self.dir
         if self.body[self.head]:
-            print('lost!')
             return False
-            # pass
         self.body[self.head] = self.body[oldhead] = self.head
         if self.head != self.food:
             self.oldtail = self.tail
@@ -60,7 +58,6 @@ class Snake():
             self.len += 1
             # input('eat')
             self.generateFood()
-            print('food', self.food)
             # flag = True
             return self.head, None, self.food
         # print(self.len)
@@ -106,19 +103,13 @@ class Snake():
         if len(self.path):
             self.dir = self.path.pop() - self.head
         else:
-            # input('empty')
-            # print('empty')
-            if self.len > (self.bn2-2)**2//3:
-                self.path = self.astar.find(
-                    self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
-            else:
-                self.path = self.astar.find(
+            # if self.len > (self.bn2-2)**2//3:
+            #     self.path = self.astar.find(
+            #         self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
+            # else:
+            self.path = self.astar.find(
                     self.food, self.head, self.tail, self.body, self.oldtail)
-            # print('suggest')
             if not self.path:
-                print(self.food)
-                print(self.head, self.tail, self.oldtail)
-                print(self)
                 return False
             self.dir = self.path.pop()-self.head
         return True
@@ -136,48 +127,43 @@ class Snake():
         grid_size = len(self.body)
         empty = [i for i in range(grid_size) if not self.body[i]]
         if not empty:
-            print('win')
             return
         self.food = sample(empty, 1)[0]
         # self.food = 72
         # self.food = 51
         # self.body[self.food] = 1
         # print('food at:{}'.format(self.food))
-        if self.len > (self.bn2-2)**2//3:
-            self.path = self.astar.find(
-                self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
-            # self.pathIndex = len(self.path)-1
-        else:
-            self.path = self.astar.find(
-                self.food, self.head, self.tail, self.body, self.oldtail)
-            # self.pathIndex = len(self.path)-1
-        # print('astar: ', str(self.astar.find(
-        #     self.food, self.head, self.tail, self.body))[1:-1])
+        # if self.len > (self.bn2-2)**2//3:
+        #     self.path = self.astar.find(
+        #         self.oldtail, self.head, self.tail, self.body, self.oldtail, 1, 1)
+        # else:
+        self.path = self.astar.find(
+            self.food, self.head, self.tail, self.body, self.oldtail)
+
+    def score(self):
+        return self.len-3
 
 
 if __name__ == '__main__':
-    snake = Snake(10)
-    # print(snake)
-    # path = pf.find(snake.food, snake.head, snake.tail, snake.body)
-    # print(path)
-    while snake.move():
-        # print(snake)
-        # print(snake.head, snake.tail, snake.oldtail)
-        # input()
-        pass
-        # print('food at:{}'.format(snake.food))
-        # snake.move()
-        # time.sleep(0.05)
-        # key = input()
+    for i in range(8, 17):
+        scores = []
+        runtimes = []
+        # print(i)
+        for k in range(10):
 
-        # if key == '':
-        #     snake.move()
-        #     print(snake)
-        # elif key == 'r':
-        #     snake.right()
-        # elif key == 'u':
-        #     snake.up()
-        # elif key == 'd':
-        #     snake.down()
-        # else:
-        #     continue
+            snake = Snake(i)
+            start = perf_counter()
+            while snake.move():
+                pass
+            end = perf_counter()
+            scores.append(snake.score())
+            runtimes.append(end-start)
+        print(i, np.average(scores), np.average(runtimes))
+
+    # snake = Snake(8)
+    # print(snake.score())
+    # print(snake.oldtail)
+    # while snake.move():
+    #     print(snake)
+    #     pass
+    # print(snake.score())
