@@ -1,3 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+'''
+@Author: Jin X
+@Date: 2020-04-10 20:04:38
+@LastEditTime: 2020-04-19 22:24:12
+'''
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # pylint: disable=C0111,C0103
