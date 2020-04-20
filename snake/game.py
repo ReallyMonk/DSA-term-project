@@ -65,6 +65,7 @@ class Game:
         print(self._algorithm)
         self.count = 0
         self.total_time = 0.0
+        self.creat_food = 1
 
     @property
     def snake(self):
@@ -80,6 +81,7 @@ class Game:
     def _game_main_normal(self):
         if not self._map.has_food():
             self._map.create_rand_food()
+            self.creatfood += 1
 
         if self._is_episode_end():
             return

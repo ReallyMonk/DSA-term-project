@@ -23,7 +23,7 @@ parser.add_argument("-s", default="hamilton", choices=dict_solver.keys(),
 args = parser.parse_args()
 
 if __name__ == '__main__':
-    conf = GameConf(map_rows = 8)
+    conf = GameConf(map_rows = 16)
     conf.solver_name = dict_solver[args.s]
     print("Algorithm: %s  " % (conf.solver_name))
 
@@ -31,3 +31,4 @@ if __name__ == '__main__':
     G.run()
     print('total_time: ', G.total_time)
     print('total move: ', G.count)
+    print('total food: ', G.creatfood)
