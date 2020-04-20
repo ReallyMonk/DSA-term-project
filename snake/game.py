@@ -34,8 +34,8 @@ class GameConf:
         self.show_info_panel = True
 
         # Delay
-        self.interval_draw = 50  # ms
-        self.interval_draw_max = 200  # ms
+        self.interval_draw = 1  # ms
+        self.interval_draw_max = 1  # ms
 
         # Color
         self.color_bg = '#000000'
@@ -74,7 +74,8 @@ class Game:
 
         # window = GameWindow("Self-playing Snake Game", self._conf, self._map, self)
         # window.show(self._game_main_normal)
-        self._game_main_normal()
+        while 1:
+            self._game_main_normal()
 
     def _game_main_normal(self):
         if not self._map.has_food():
