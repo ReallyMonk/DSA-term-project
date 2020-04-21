@@ -3,7 +3,7 @@ import random
 
 class bfsSolver():
     def __init__(self):
-        print('create solver')
+        # print('create solver')
         pass
 
     def update_info(self, head, tail, body, food, width):

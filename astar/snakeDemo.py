@@ -3,7 +3,7 @@
 '''
 @Author: Jin X
 @Date: 2020-04-09 15:01:42
-@LastEditTime: 2020-04-19 15:33:29
+@LastEditTime: 2020-04-19 22:02:56
 '''
 from random import sample
 import math
@@ -145,20 +145,29 @@ class Snake():
 
 
 if __name__ == '__main__':
-    for i in range(8, 17):
+    scoremap = [24, 30, 33, 41, 50]
+    scoremap.reverse()
+    for i in range(8, 17, 2):
         scores = []
         runtimes = []
+        counts = []
         # print(i)
+        sclim = scoremap.pop()
         for k in range(10):
-
+            # print(i, k)
             snake = Snake(i)
             start = perf_counter()
+            count = 0
             while snake.move():
+                count += 1
+                if snake.score() == sclim:
+                    break
                 pass
             end = perf_counter()
             scores.append(snake.score())
             runtimes.append(end-start)
-        print(i, np.average(scores), np.average(runtimes))
+            counts.append(count)
+        print(i, np.mean(counts), np.mean(scores), np.mean(runtimes))
 
     # snake = Snake(8)
     # print(snake.score())

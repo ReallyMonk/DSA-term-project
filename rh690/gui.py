@@ -13,7 +13,7 @@ import time
 
 
 class CanvasDemo:
-    def __init__(self, block_num=20, block_size=20):
+    def __init__(self, block_num=8, block_size=20):
         window = Tk()
         window.title("Canvas Demo")
         window.resizable(width=False, height=False)
@@ -99,4 +99,4 @@ class CanvasDemo:
             x*self.bs, y*self.bs, (x+1)*self.bs, (y+1)*self.bs, fill=color)
 
 
-CanvasDemo(16)
+CanvasDemo(8)
