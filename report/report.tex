@@ -1,6 +1,5 @@
-\documentclass[conference]{IEEEtran}
-\IEEEoverridecommandlockouts
-% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\documentclass[12pt]{article}
+
 \usepackage{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
@@ -8,27 +7,11 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{float}
-\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
-    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+
 \begin{document}
 
-\title{Self-playing Snake Game based on Pathfinding Algorithms}
-
-\author{\IEEEauthorblockN{Yang Sui}
-\IEEEauthorblockA{\textit{ECE, School Of Graduate Studies} \\
-\textit{Rutgers University}\\
-hourunlinxa@gmail.com}
-\and
-\IEEEauthorblockN{Jin Xu}
-\IEEEauthorblockA{\textit{ECE, School Of Graduate Studies} \\
-\textit{Rutgers University}\\
-hourunlinxa@gmail.com}
-\and
-\IEEEauthorblockN{Runlin Hou}
-\IEEEauthorblockA{\textit{ECE, School Of Graduate Studies} \\
-\textit{Rutgers University}\\
-hourunlinxa@gmail.com}
-}
+\title{\textbf{Self-playing Snake Game based on Pathfinding Algorithms}}
+\author{Yang Sui \and Jin Xu \and Runlin Hou}
 
 \maketitle
 
@@ -62,12 +45,19 @@ For the code implementation, we found that the map of the snake follows strict m
 \section{BFS Approach}
 Before I choose to use BFS as the algorithm, I actually think about some other ways to achieve my goals, like DFS or Dijkstra. For DFS, it will keep going on one path until it reaches the target. And renew this path if the other path is shorter. So with the map getting bigger, it will take much longer than the BFS. As for Dijkstra, when facing an undirected graph with the same weights for all edges, Dijkstra is exactly BFS. So I take BFS instead.
 
-\subsection*{Introduction}
+\begin{figure}[H]
+    \centering 
+    \includegraphics[scale = 0.8]{1.png}
+    \caption{BFS algorithm}
+    \label{fig:figure1}
+\end{figure}
+
+\subsection{Introduction}
 We will start by talking about some common sense of the BFS algorithm. We all know that the BFS algorithm will traversal all of the vertices to find the target that we are looking for. If we are doing a BFS in a tree, and we search from the root node, the BFS algorithm can be seen as searching layer by layer from top to bottom. When we deal with a graph, we need to set an initial vertice for the algorithm and the process of the algorithm will spread like a water wave.
 
 So generally speaking, the basic logic of the BFS algorithm is to set up an initial vertice and keep visiting the adjacencies until we find the target. 
 
-\subsection*{Implementation}
+\subsection{Implementation}
 The implementation of the BFS is simple. And since we are dealing with an undirected graph with the same weight for edges. The process becomes easier. Considering the attribute of the BFS itself, every path found by BFS would be exactly the shortest path to the target because every vertice will be immediately added to the queue right after their parents been visited.
 
 I use two functions to implement the kernel goal of the BFS algorithm. 
@@ -100,7 +90,7 @@ Basically, the process will be going as visiting the vertices whose distance is 
 and visited the vertices whose distance is 2 to head and so on. Once we reach the target, 
 we will stop the loop.
 
-\subsection*{Strategy}
+\subsection{Strategy}
 
 The kernel of the algorithm is to find the shortest path to the food. But it is not enough to
 find the shortest path for the snake. Also, we need to tell the snake how it can try to be 
