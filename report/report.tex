@@ -286,7 +286,7 @@ Secondly, we will extend the shortest path to a longest path, also known as Hami
 
 Finally, we can get a longest path, which is the Hamiltonian Circle in the map of self-playing snake game.
 
-\section{Shortcuts in Hamiltonian Circle Algorithm}
+\subsection{Shortcuts in Hamiltonian Circle Algorithm}
 
 Although Hamiltonian Circle Algorithm can insure the snake eat every food, it need move much steps in total game. Every time the snake need go along the longest path even the food is near the snake head. In this case, we can choose a shortcut in the early-stage to let the total number of movements become smaller. But it needs more time to judge the next direction. That's a trade-off between movement length and direction judgement time. 
 
@@ -301,7 +301,7 @@ The method we use to choose shortcuts is to find the shortest path between curre
 
 These two algorithm can eat every food until the snake body is full of the map. Two algorithm need build a Hamiltonian Circle when given a initial snake before game starts. Naive Hamiltonian Algorithm doesn't need extra judgement but need more movements length in entire process. Advanced Algorithm including shortcuts need extra judgements but less movements length. That's a trade-off.
 
-\section{Analysis}
+\section{Experiments and Analysis}
 
 In this part, we will analyze the results from the performance of each algorithm. We run all the algorithms ten times for different sizes of the map and take the average of each algorithm. We finally decided to take three data for the assessment.
 \begin{itemize}
@@ -309,6 +309,15 @@ In this part, we will analyze the results from the performance of each algorithm
     \item runtime(ms) per score
     \item runtime(us) per movement
 \end{itemize}
+
+\subsection{Experimental configurations and details}
+\begin{itemize}
+    \item Processor: AMD Ryzen 3600x
+    \item Operation System: Windows 10
+    \item Language: Python3
+    \item Map Size: 8 10 12 14 16
+\end{itemize}
+
 
 \subsection{Summary}
 
@@ -413,5 +422,11 @@ if we view the runtime (judgement time) per movement as performance, less is bet
       $$Hamiltonian > A star > BFS > Hamiltonian\ shortcut$$
       
 That's a trade-off between movements length and alive score. Depends on which performance we need. Beyond that, if we need less runtime (judgement time), Astar or Hamiltonian is better.
+
+\section{Contribution}
+
+Yang Sui: Hamilton Algorithm, Snake Game Implementation, Analysis\\
+Jin Xu: A* Approach, Snake Game Implementation, Analysis\\
+Runlin Hou: BFS Approach, Analysis
 
 \end{document}
