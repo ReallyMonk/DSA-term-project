@@ -8,7 +8,29 @@
 \usepackage{xcolor}
 \usepackage{float}
 \usepackage{subfigure}
+\usepackage{listings}
+\usepackage{color}
 
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
 \begin{document}
 
 \title{\textbf{Self-playing Snake Game based on Pathfinding Algorithms}}
@@ -26,22 +48,43 @@ We separate the snake game into three parts:
     \item food
 \end{itemize}
 
-The map is where the snake takes its movement, so we will build the map as the fundamental graph. Considering the structure of the map, it is like a  chessboard with blocks arranged in rows and columns that are perpendicular to each other. Each block of the map will be treated as a vertice, and the edges will be used to describe the connection of two vertices. 
+The map is where the snake takes its movement, so we will build the map as the fundamental graph. Considering the structure of the map, it is like a  chessboard with blocks arranged in rows and columns that are perpendicular to each other. Each block of the map will be treated as a vertices, and the edges will be used to describe the connection of two vertices. 
+
+\begin{lstlisting}
+class Map:
+    self.num_rows = num_rows
+    self.num_cols = num_cols
+    self.information = [[Point() for _ in range(num_cols)] for _ in range(num_rows)]
+
+    def is_full()
+    def has_food()
+    def remove_food()
+    def create_food(position)
+    def create_rand_food()
+\end{lstlisting}
 
 For the body of the snake, since the blocks that the body was taken are unreachable for the snake. So we decide to mark those vertices as taken.
+\begin{lstlisting}
+class Snake:
+    self.map = game_map
+    def head()
+    def tail()
+    def move_path(path)
+    def move(new_direction)
+\end{lstlisting}
 
-The food of the position will be saved. But the vertice itself will be the same as the other vertices since the food must be reachable for the snake to take.
+The food of the position will be saved. But the vertices itself will be the same as the other vertices since the food must be reachable for the snake to take.
 
-As a whole, the snake game will be built on an undirected graph with the same weight for all edges. Because the snake would be able to reach every vertice, and each vertice will only take one movement to move to its adjacent vertice.
+As a whole, the snake game will be built on an undirected graph with the same weight for all edges. Because the snake would be able to reach every vertices, and each vertices will only take one movement to move to its adjacent vertices.
 
 In the implementation of our snake on graph theory, all three parts can be built as follow:
 \begin{itemize}
     \item map, an undirected and unweighted map
-    \item snake, will be marked as unreachable vertice to its adjacencies
-    \item food, normal vertice but the position will be saved
+    \item snake, will be marked as unreachable vertices to its adjacency
+    \item food, normal vertices but the position will be saved
 \end{itemize}
 
-For the code implementation, we found that the map of the snake follows strict mathematical rules like every row has the same vertices, and also every column has the same vertices. Mathematically, each vertice's position can be calculated by adding or subtracting a certain value. Considering this situation, we save the whole map in a list and make a judgment of their connection according to their coordinates.
+For the code implementation, we found that the map of the snake follows strict mathematical rules like every row has the same vertices, and also every column has the same vertices. Mathematically, each vertices's position can be calculated by adding or subtracting a certain value. Considering this situation, we save the whole map in a list and make a judgment of their connection according to their coordinates.
 
 \section{BFS Approach}
 Before I choose to use BFS as the algorithm, I actually think about some other ways to achieve my goals, like DFS or Dijkstra. For DFS, it will keep going on one path until it reaches the target. And renew this path if the other path is shorter. So with the map getting bigger, it will take much longer than the BFS. As for Dijkstra, when facing an undirected graph with the same weights for all edges, Dijkstra is exactly BFS. So I take BFS instead.
@@ -54,22 +97,22 @@ Before I choose to use BFS as the algorithm, I actually think about some other w
 \end{figure}
 
 \subsection{Introduction}
-We will start by talking about some common sense of the BFS algorithm. We all know that the BFS algorithm will traversal all of the vertices to find the target that we are looking for. If we are doing a BFS in a tree, and we search from the root node, the BFS algorithm can be seen as searching layer by layer from top to bottom. When we deal with a graph, we need to set an initial vertice for the algorithm and the process of the algorithm will spread like a water wave.
+We will start by talking about some common sense of the BFS algorithm. We all know that the BFS algorithm will traversal all of the vertices to find the target that we are looking for. If we are doing a BFS in a tree, and we search from the root node, the BFS algorithm can be seen as searching layer by layer from top to bottom. When we deal with a graph, we need to set an initial vertices for the algorithm and the process of the algorithm will spread like a water wave.
 
-So generally speaking, the basic logic of the BFS algorithm is to set up an initial vertice and keep visiting the adjacencies until we find the target. 
+So generally speaking, the basic logic of the BFS algorithm is to set up an initial vertices and keep visiting the adjacency until we find the target. 
 
 \subsection{Implementation}
-The implementation of the BFS is simple. And since we are dealing with an undirected graph with the same weight for edges. The process becomes easier. Considering the attribute of the BFS itself, every path found by BFS would be exactly the shortest path to the target because every vertice will be immediately added to the queue right after their parents been visited.
+The implementation of the BFS is simple. And since we are dealing with an undirected graph with the same weight for edges. The process becomes easier. Considering the attribute of the BFS itself, every path found by BFS would be exactly the shortest path to the target because every vertices will be immediately added to the queue right after their parents been visited.
 
 I use two functions to implement the kernel goal of the BFS algorithm. 
 \begin{itemize}
-    \item \verb|connected(vertice)|
+    \item \verb|connected(vertices)|
     \item \verb|bfs(head, target)|
 \end{itemize}
 
-\verb|connect(ver)| will take a vertice as an input. And the output is a list of the adjacencies of this vertice. As we mentioned in the last section, the graph that our map mapped to is a list. Also, as we knew, the map of the Snake Game is like a chessboard, that each node has four edges and is vertical to each other. So the mathematical relationship of connected vertices can be described as following:
+\verb|connect(ver)| will take a vertices as an input. And the output is a list of the adjacency of this vertices. As we mentioned in the last section, the graph that our map mapped to is a list. Also, as we knew, the map of the Snake Game is like a chessboard, that each node has four edges and is vertical to each other. So the mathematical relationship of connected vertices can be described as following:
 
-$a$, $b$ are coordinates of two vertices, when $a$, $b$ can fit the following equtoins, then they
+$a$, $b$ are coordinates of two vertices, when $a$, $b$ can fit the following equations, then they
 are connected. $w$ is the length of the map.
 \begin{eqnarray}
         a = b - 1 \\
@@ -85,7 +128,7 @@ store the index of them as attributes in the \verb|solver| class.
 \verb|bfs(head, target)| takes the head position of the snake and the target position as 
 inputs. And it will return the shortest path from the snake's head to the target. 
 To achieve the purpose of BFS, we first need to create a FIFO queue to record the incoming 
-vertices. Each time we visited a new vertice, we will add its adjacencies into the queue for 
+vertices. Each time we visited a new vertices, we will add its adjacencies into the queue for 
 future visiting. This can be done easily combined with the \verb|connected(ver)|. 
 Basically, the process will be going as visiting the vertices whose distance is 1 to head, 
 and visited the vertices whose distance is 2 to head and so on. Once we reach the target, 
@@ -105,7 +148,7 @@ food, it will chase the tail. And of course, there will also be a situation that
 not found the food nor the tail. When we are facing this situation, I'll ask the sanke to move 
 randomly and pray for the food can be reached several movements later.
 
-Also, it is obvious that the game is a dynamic process. But the path we found is always based on a map in a certain moment. This means that we may not get the shortest path cause with the movement of snakes body, the connection of each vertice might be updated, then some new path will be created. So I will have the snake find a new path after every movement, though the first path can lead the snake to destination.
+Also, it is obvious that the game is a dynamic process. But the path we found is always based on a map in a certain moment. This means that we may not get the shortest path cause with the movement of snakes body, the connection of each vertices might be updated, then some new path will be created. So I will have the snake find a new path after every movement, though the first path can lead the snake to destination.
 
 \section{A* Approach}
 Although BFS algorithm is a very useful approach for a path finding problem, it is not an efficient algorithm. In this section, we use the A* (also known as "A star") path finding algorithm to implement our goals. A* can also find the shortest(or longest) path, but it has a smaller time complexity and a greater space complexity compared to BFS. 
