@@ -7,7 +7,6 @@
 \usepackage{textcomp}
 \usepackage{xcolor}
 \usepackage{float}
-\usepackage{subfigure}
 
 \begin{document}
 
@@ -136,7 +135,7 @@ Following figure shows an example of Dijkstra's searching process.
 
 \begin{figure}[H]
     \centering 
-    \includegraphics[scale = 0.6]{3.png}
+    \includegraphics[scale = 0.4]{3.png}
     \caption{Dijkstra's}
 \end{figure}
 
@@ -144,56 +143,11 @@ The major advantage of Dijkstra's algorithm is that it always can find the short
 
 The Greedy algorithm follows a very simple strategy: visit the neighbor that has the smallest distance to destination every time. Here we need to use a measurement to define the distance in a 2-D graph. The most common used measurements includes Manhattan distance and Euclidean distance:
 
-\begin{equation*}
-    \begin{split}
-        &Manhattan Distance = |x_1-x_2|+|y_1-y_2|\\
-        &Euclidean Distance = \sqrt{(x_1-x_2)^2+(y_1-y_2)^2}
-    \end{split}
-\end{equation*}
+\[\begin{aligned}
+    Manhattan Distance = |x_1-x_2|+|y_1-y_2|\\
+    Euclidean Distance = \sqrt{(x_1-x_2)^2+(y_1-y_2)^2}\\
+\end{aligned}\]
 
-The implementation is also simple:
-\begin{itemize}
-    \item Visit current vertex C, mark C visited
-    \item Calculate the distances for all its neighbor, visit the one has the smallest distance
-\end{itemize}
-
-Also the following figure shows an example of Greedy algorithm searching process.
-\begin{figure}[H]
-    \centering 
-    \includegraphics[scale = 0.6]{4.png}
-    \caption{Greedy}
-\end{figure}
-
-Obviously, Greedy algorithm is very efficient. It acts like it knows where the destination is and use less time to find the shortest path compared to Dijkstra's algorithm.
-
-However, if there is a "wall"(or unreachable vertices) between the starting vertex and ending vertex, Greedy algorithm cannot find the shortest path, the following figure illustrates such situations.
-
-\begin{figure}[H]
-    \centering 
-    \includegraphics[scale = 0.6]{5.png}
-    \caption{Greedy with "wall"}
-\end{figure}
-
-\subsection{A* Algorithm \& Implementation}
-
-The initial idea of A* algorithm is to take the Greedy approach as a heuristic information and combine it with Dijkstra's approach. It also use a priority queue for selecting the minimum cost in each iteration. But the cost function is different:
-
-\begin{equation*}
-    f(n) = g(n) + h(n;d)
-\end{equation*}
-
-Here $f(n)$ is the cost from starting point $s$ to vertex $n$, $g(n)$ is the sum of weights 
-along the path from $s$ to $n$, which is the same as Dijkstra's algorithm, and the $h(n;d)$ 
-means a heuristic value for $n$ and destination $d$. Usually, $h(n;d)$ is the distance from $n$ 
-to $d$, which is the same as Greedy algorithm.
-
-So, why does it work?
-
-\begin{itemize}
-    \item Generally, since each "move" has the same cost, A* tends to visit the direction that has less $h(n;d)$.
-    \item If there is no impediment, $h(n;d)$ leads the searching path directly toward destination. The Greedy part has greater effect.
-    \item If there is a "wall", although $h(n;d)$ first leads to a bad path(more steps) first, but then because of a great $g(n)$, it would cut this path and try another direction. Here the Dijkstra's part has greater effect.
-\end{itemize}
 
 \section{Hamiltonian Circle Algorithm}
 
@@ -257,68 +211,6 @@ The method we use to choose shortcuts is to find the shortest path between curre
 
 These two algorithm can eat every food until the snake body is full of the map. Two algorithm need build a Hamiltonian Circle when given a initial snake before game starts. Naive Hamilton Algorithm doesn't need extra judgement but need more movements length in entire process. Advanced Algorithm including shortcuts need extra judgements but less movements length. That's a trade-off.
 
-\section{Analysis}
-
-In this part, we will analyze the results from the performance of each algorithm. We run all the algorithms ten times for different sizes of the map and take the average of each algorithm. We finally decided to take three data for the assessment.
-\begin{itemize}
-    \item movements per score
-    \item runtime(ms) per score
-    \item runtime(us) per movement
-\end{itemize}
-
-\subsection{Summary}
-
-Before we start to talk about the detailed performance of all algorithms, we can have a whole picture of their performances. The following pictures show how all three snakes directed by algorithms end. We can see that the Hamilton algorithms can help the snake to fill up the whole map. Compare to Hamilton, BFS and A* show much worse performance on this criterion. Though A* got better performance than BFS, it can only reach half of the map in most times. This shows the foundational differences between Hamilton and other algorithms. Hamilton focuses more on the surviving problem, which also shows in the analysis of the later performances.
-
-\begin{figure}[H]
-    \centering
-    \subfigure[BFS]{
-        \centering 
-        \includegraphics[scale = 0.9]{ana1.png}}
-    \subfigure[A*]{
-        \centering 
-        \includegraphics[scale = 0.9]{ana2.png}}
-    \subfigure[Hamilton]{
-        \centering 
-        \includegraphics[scale = 0.4]{ana3.png}}
-
-        \caption{Endings of three algorithms}
-\end{figure}
-
-\subsection{Performance}
-In this section, we will talk about the three criterion mentioned before.
-\subsubsection{Movements per score}
-This data shows how many movements the snake is going to use to get the food. The reason we take this data as one criterion is that one of the purposes we design this project. So for each time the snake goes for food, we want the snake to take the shortest path so that the program can be more efficient. 
-
-\begin{figure}[H]
-    \centering 
-    \includegraphics[scale = 0.9]{anay1.png}
-    \caption{Movements per score}
-\end{figure}
-
-From the figure above, we can see that two Hamilton algorithms take more movements to get one food, which conforms to what we expected before the implementation. For the Hamilton algorithm, it takes being alive as the first job. So when it makes a decision on the path to the food, it will not always go for the shortest path. Actually, to live longer, the algorithm tends to choose the path that is decided according to the Hamilton circle, and a Hamilton circle will always take a longer path so that the snake can live longer. For the A* and BFS, we can see that they always take the shorter path to compare to the Hamilton circle, cause the strategy will urge the snake to go for the shortest path. 
-
-\subsubsection{Runtime(ms) per score}
-
-This criterion is supposed to be relative to the movements it takes to get the food. We get this data by dividing the total time by total scores. For A* and BFS, since they take a similar strategy and pathfinding algorithm kernel, these two algorithms share a similar performance on these two criteria. Also, as we expected, the two algorithms show a little difference. The greedy algorithm in A* helps to make a quicker decision. That's where the improvement came from. 
-
-\begin{figure}[H]
-    \centering 
-    \includegraphics[scale = 0.9]{anay2.png}
-    \caption{runtime(ms) per score}
-\end{figure}
-
-Meanwhile, the two kinds of Hamilton algorithms are extremely different from each other. As we mentioned before, the shortcut will only initialize one path that can fill the whole map. And then it will go along this path, so it makes no dynamical decision in the whole process, that's why its runtime on every score being so small. Otherwise, the Hamilton algorithm will dynamically update the path after every movement. 
-
-\subsubsection{Runtime($\mu$s) per movement}
 
 
-
-\begin{figure}[H]
-    \centering 
-    \includegraphics[scale = 0.9]{anay3.png}
-    \caption{runtime($\mu$s) per movement}
-\end{figure}
-
-This criterion is computed by dividing total runtime by total movements. As we can see, this graph shows the same tendency as the last one. And also, the runtime will rise with the body of the snake getting longer. That is because as the body getting longer, there will be more walls inside the map, which means it will take more movements to get the food. Relatively, it will take more time for the algorithm to find the path. There is only one exception, the Short Cut. Because this algorithm only focuses on the initial path, and will not dynamically update this path. 
 \end{document}
