@@ -288,7 +288,10 @@ Before we start to talk about the detailed performance of all algorithms, we can
 \subsection{Performance}
 In this section, we will talk about the three criterion mentioned before.
 \subsubsection{Movements per score}
-This data shows how many movements the snake is going to use to get the food. The reason we take this data as one criterion is that one of the purposes we design this project. So for each time the snake goes for food, we want the snake to take the shortest path so that the program can be more efficient. 
+This data shows how many movements the snake is going to use to get the food. The reason 
+we take this data as one criterion is that one of the purposes we design this project. So 
+for each time the snake goes for food, we want the snake to take the shortest path so that 
+the program can be more efficient. 
 
 \begin{figure}[H]
     \centering 
@@ -296,11 +299,22 @@ This data shows how many movements the snake is going to use to get the food. Th
     \caption{Movements per score}
 \end{figure}
 
-From the figure above, we can see that two Hamilton algorithms take more movements to get one food, which conforms to what we expected before the implementation. For the Hamilton algorithm, it takes being alive as the first job. So when it makes a decision on the path to the food, it will not always go for the shortest path. Actually, to live longer, the algorithm tends to choose the path that is decided according to the Hamilton circle, and a Hamilton circle will always take a longer path so that the snake can live longer. For the A* and BFS, we can see that they always take the shorter path to compare to the Hamilton circle, cause the strategy will urge the snake to go for the shortest path. 
+From the figure above, we can see that two Hamilton algorithms take more movements to get one 
+food, which conforms to what we expected before the implementation. For the Hamilton algorithm, 
+it takes being alive as the first job. So when it makes a decision on the path to the food, it 
+will not always go for the shortest path. Actually, to live longer, the algorithm tends to 
+choose the path that is decided according to the Hamilton circle, and a Hamilton circle will 
+always take a longer path so that the snake can live longer. For the A* and BFS, we can see 
+that they always take the shorter path to compare to the Hamilton circle, cause the strategy 
+will urge the snake to go for the shortest path. 
 
 \subsubsection{Runtime(ms) per score}
 
-This criterion is supposed to be relative to the movements it takes to get the food. We get this data by dividing the total time by total scores. For A* and BFS, since they take a similar strategy and pathfinding algorithm kernel, these two algorithms share a similar performance on these two criteria. Also, as we expected, the two algorithms show a little difference. The greedy algorithm in A* helps to make a quicker decision. That's where the improvement came from. 
+This criterion is supposed to be relative to the movements it takes to get the food. We get 
+this data by dividing the total time by total scores. For A* and BFS, since they take a similar 
+strategy and pathfinding algorithm kernel, these two algorithms share a similar performance on 
+these two criteria. Also, as we expected, the two algorithms show a little difference. The 
+greedy algorithm in A* helps to make a quicker decision. That's where the improvement came from. 
 
 \begin{figure}[H]
     \centering 
@@ -308,7 +322,11 @@ This criterion is supposed to be relative to the movements it takes to get the f
     \caption{runtime(ms) per score}
 \end{figure}
 
-Meanwhile, the two kinds of Hamilton algorithms are extremely different from each other. As we mentioned before, the shortcut will only initialize one path that can fill the whole map. And then it will go along this path, so it makes no dynamical decision in the whole process, that's why its runtime on every score being so small. Otherwise, the Hamilton algorithm will dynamically update the path after every movement. 
+Meanwhile, the two kinds of Hamilton algorithms are extremely different from each other. 
+As we mentioned before, the Hamilton will only initialize one path that can fill the whole map. 
+And then it will go along this path, so it makes no dynamical decision in the whole process, 
+that's why its runtime on every score being so small. Otherwise, the Shortcut algorithm will 
+dynamically update the path after every movement. 
 
 \subsubsection{Runtime($\mu$s) per movement}
 
@@ -320,5 +338,12 @@ Meanwhile, the two kinds of Hamilton algorithms are extremely different from eac
     \caption{runtime($\mu$s) per movement}
 \end{figure}
 
-This criterion is computed by dividing total runtime by total movements. As we can see, this graph shows the same tendency as the last one. And also, the runtime will rise with the body of the snake getting longer. That is because as the body getting longer, there will be more walls inside the map, which means it will take more movements to get the food. Relatively, it will take more time for the algorithm to find the path. There is only one exception, the Short Cut. Because this algorithm only focuses on the initial path, and will not dynamically update this path. 
+This criterion is computed by dividing total runtime by total movements. As we can see, 
+this graph shows the same tendency as the last one. And also, the runtime will rise with the 
+body of the snake getting longer. That is because as the body getting longer, there will be 
+more walls inside the map, which means it will take more movements to get the food. Relatively, 
+it will take more time for the algorithm to find the path. There is only one exception, 
+the Hamilton. Because this algorithm only focuses on the initial path, and will not dynamically 
+update this path.
+
 \end{document}
